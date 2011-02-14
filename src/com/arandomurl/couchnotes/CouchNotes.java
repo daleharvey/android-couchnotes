@@ -38,20 +38,15 @@ public class CouchNotes extends Activity {
 	// private String[] bootstrapDatabases = {"couchnotes"};
 	public String[] bootstrapDatabases = {"couchnotes"};
 
-	// If you want to instantiate replication from your application
-	// you will need a command database eg:
-	// private String[] requiresCommandDatabase = {"couchnotes"};
-	public String[] requiresCommandDatabase = {"couchnotes"};
-
 	// If you name a database here, its _design/db/index.html
 	// will be launched once the databases have been initialised eg:
 	// private String appToLaunch = "couchnotes";
 	public String appToLaunch = "couchnotes";
 
-	// This will generate the password for your databases against a key, if you want
-	// to use a constant password use CouchUtils.readOrGeneratePass("key", "password")
-	// adb shell cat /sdcard/couch/key.passwd to read the password 
-	public String adminPass = CouchUtils.readOrGeneratePass("default");
+	// This will generate the password for you, if you want
+	// to use a constant password use CouchUtils.readOrGeneratePass(this, "password")
+	//  adb shell cat /data/data/com.arandomurl.focus/files/com_arandomurl_focus.passwd
+	public String adminPass = null;
 		
 	// RELAX, The above settings are all you need to get a basic CouchApp running.
 
@@ -240,8 +235,7 @@ public class CouchNotes extends Activity {
 		}
 
 		String dbTag = bootstrapDatabases[initDatabases];
-		boolean hasCmdDb = CouchUtils.inArray(requiresCommandDatabase, dbTag);
-		couchService.initDatabase(couchClient, dbTag, adminPass, hasCmdDb);
+		couchService.initDatabase(couchClient, dbTag, adminPass, false);
 	};
 
 	/*
